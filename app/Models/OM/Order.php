@@ -10,6 +10,10 @@ class Order extends BaseModel
     const STATUS_CANCELLED = 'cancelled';
     const STATUS_CONFIRMED = 'confirmed';
 
+    protected $fillable = [
+        'status'
+    ];
+
     /*********************************************************************************
      *                                  Relations
      *********************************************************************************/
