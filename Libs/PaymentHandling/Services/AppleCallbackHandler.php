@@ -2,6 +2,7 @@
 
 namespace Libs\PaymentHandling\Services;
 
+use Libs\PaymentHandling\Events\CancelledPaymentEvent;
 use Libs\PaymentHandling\Events\SuccessfulPaymentEvent;
 use Libs\PaymentHandling\Exceptions\CallbackHandlerException;
 use Libs\PaymentHandling\Http\Requests\AppleCallbackRequest;
@@ -24,8 +25,7 @@ class AppleCallbackHandler implements CallbackRequestHandler
                 $paymentEvent = $this->makeSuccessfulPaymentEvent($request->getProductId());
                 break;
             case AppleCallbackRequest::TYPE_CANCEL:
-                // @TODO: produce cancelled payment event
-                throw new \Exception('not implemented yet');
+                $paymentEvent = $this->makeCancelledPaymentEvent($request->getProductId());
                 break;
             case AppleCallbackRequest::TYPE_DID_CHANGE_RENEWAL_STATUS:
                 // @TODO: produce refunded payment event
@@ -50,5 +50,16 @@ class AppleCallbackHandler implements CallbackRequestHandler
     private function makeSuccessfulPaymentEvent(string $orderId): SuccessfulPaymentEvent
     {
         return new SuccessfulPaymentEvent($orderId);
+    }
+
+    /**
+     * Produces a cancelled payment event
+     *
+     * @param string $orderId
+     * @return CancelledPaymentEvent
+     */
+    private function makeCancelledPaymentEvent(string $orderId): CancelledPaymentEvent
+    {
+        return new CancelledPaymentEvent($orderId);
     }
 }

@@ -6,13 +6,25 @@ use Libs\PaymentHandling\Interfaces\PaymentEvent;
 
 class CancelledPaymentEvent implements PaymentEvent
 {
+    /**
+     * @var string
+     */
+    private $orderId;
+
+    /**
+     * CancelledPaymentEvent constructor.
+     * @param string $orderId
+     */
+    public function __construct(string $orderId)
+    {
+        $this->orderId = $orderId;
+    }
 
     /**
      * @inheritDoc
      */
     public function getOrderId(): string
     {
-        // TODO: Implement getOrderId() method.
-        throw new \Exception('not implemented yet!');
+        return $this->orderId;
     }
 }
