@@ -27,7 +27,8 @@ class AppleCallbackRequest extends BasePaymentRequest
     public function rules()
     {
         return [
-            'notification_type' => 'required|string',
+            'notification_type' => 'required|string|filled',
+            'auto_renew_product_id' => 'required|string|filled',
         ];
     }
 
