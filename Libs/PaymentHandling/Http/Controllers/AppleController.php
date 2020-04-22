@@ -26,11 +26,16 @@ class AppleController extends BaseController
     /**
      * @param AppleCallbackRequest $request
      * @return JsonResponse
+     * @throws \Libs\PaymentHandling\Exceptions\CallbackHandlerException
      */
     public function callback(AppleCallbackRequest $request): JsonResponse
     {
-        $this->callbackHandler->handle($request);
+        // Produces a PaymentEvent
+        $paymentEvent = $this->callbackHandler->handle($request);
 
-        return response()->json('hi from apple callback handler');
+        // Dispatches the event
+        event($paymentEvent);
+
+        return response()->json('ok');
     }
 }

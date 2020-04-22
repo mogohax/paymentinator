@@ -23,7 +23,23 @@ class AppleCallbackRequest extends BasePaymentRequest
     public function rules()
     {
         return [
-            //
+            'notification_type' => 'required|string',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProductId(): string
+    {
+        return $this->get('auto_renew_product_id');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCallbackType(): string
+    {
+        return $this->get('notification_type');
     }
 }

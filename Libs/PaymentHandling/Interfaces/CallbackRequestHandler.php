@@ -3,6 +3,8 @@
 
 namespace Libs\PaymentHandling\Interfaces;
 
+use Libs\PaymentHandling\Exceptions\CallbackHandlerException;
+
 /**
  * This provides a basic interface for payment provider callback handling
  *
@@ -13,9 +15,11 @@ interface CallbackRequestHandler
 {
     /**
      * Handles an incoming payment callback
+     * and either produces a PaymentEvent or throws an exception
      *
      * @param PaymentRequest $request
-     * @return void
+     * @return PaymentEvent
+     * @throws CallbackHandlerException
      */
-    public function handle(PaymentRequest $request): void;
+    public function handle(PaymentRequest $request): PaymentEvent;
 }
